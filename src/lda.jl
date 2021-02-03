@@ -28,7 +28,7 @@ predict(f::Discriminant, X::AbstractMatrix) = (Y = evaluate(f, X); Bool[y > 0 fo
 
 #### function to solve linear discriminant
 
-function ldacov(C::DenseMatrix{T},
+function ldacov(C::Union{DenseMatrix{T}, Symmetric{T, <:DenseMatrix{T}}},
                 μp::DenseVector{T},
                 μn::DenseVector{T}) where T<:Real
 
@@ -39,8 +39,8 @@ function ldacov(C::DenseMatrix{T},
     LinearDiscriminant(rmul!(w, c), 1 - c * ap)
 end
 
-ldacov(Cp::DenseMatrix{T},
-       Cn::DenseMatrix{T},
+ldacov(Cp::Union{DenseMatrix{T}, Symmetric{T, <:DenseMatrix{T}}},
+       Cn::Union{DenseMatrix{T}, Symmetric{T, <:DenseMatrix{T}}},
        μp::DenseVector{T},
        μn::DenseVector{T}) where T<:Real = ldacov(Cp + Cn, μp, μn)
 
